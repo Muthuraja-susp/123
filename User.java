@@ -1,4 +1,4 @@
-package embedded;
+package org.user;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -6,25 +6,43 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import org.user.Address;
 @Entity
 public class User {
-	@Id
-	private int id;
-	private String name;
-	private long phone;
 	@Embedded
-	@AttributeOverrides({ 
-		@AttributeOverride(name="dno",column=@Column(name="OFF_dno")),
-		@AttributeOverride(name="streetName",column=@Column(name="OFF_Sname")),
-		@AttributeOverride(name="area",column=@Column(name="OFF_area")),
-		@AttributeOverride(name="pincode",column=@Column(name="OFF_pincode"))
+	public Address homeAddress;
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="doorNumber",column=@Column(name="CDNO")),
+		@AttributeOverride(name="streetName",column=@Column(name="Cstreet")),
+		@AttributeOverride(name="city",column=@Column(name="Ccity")),
+		@AttributeOverride(name="state",column=@Column(name="Cstate")),
+		@AttributeOverride(name="country",column=@Column(name="Ccountry")),
+		@AttributeOverride(name="pincode",column=@Column(name="Cpin")),
 		
 	})
-	private Address add;
-	public int getId() {
+	public Address compAddress;
+	
+	@Id
+	private String id;
+	private String name,emailId;
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+	public Address getCompAddress() {
+		return compAddress;
+	}
+	public void setCompAddress(Address compAddress) {
+		this.compAddress = compAddress;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -33,29 +51,22 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getPhone() {
-		return phone;
+	public String getEmailId() {
+		return emailId;
 	}
-	public void setPhone(long phone) {
-		this.phone = phone;
-	}
-	public Address getAdd() {
-		return add;
-	}
-	public void setAdd(Address add) {
-		this.add = add;
-	}
-	public User(int id, String name, long phone, Address add) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.phone = phone;
-		this.add = add;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-
+	public User(Address homeAddress, Address compAddress, String id, String name, String emailId) {
+		super();
+		this.homeAddress = homeAddress;
+		this.compAddress = compAddress;
+		this.id = id;
+		this.name = name;
+		this.emailId = emailId;
+	}
 }
